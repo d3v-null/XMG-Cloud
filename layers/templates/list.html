@@ -15,7 +15,7 @@
       {% if layer.imageUrl %}
         <img src="{{layer.imageUrl}}">
       {% else %}
-        <img src="http://placekitten.com/g/128/192">
+        <img src="https://picsum.photos/128/193/?random&q={{ range(1,100) | random }}">
       {% endif %}
     </div>
     <div class="media-body">
