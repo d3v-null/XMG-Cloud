@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Layer</h3>
+
+<div class="btn-group">
+  <a href="/layers/{{layer.id}}/edit" class="btn btn-primary btn-sm">
+    <i class="glyphicon glyphicon-edit"></i>
+    Edit layer
+  </a>
+  <a href="/layers/{{layer.id}}/delete" class="btn btn-danger btn-sm">
+    <i class="glyphicon glyphicon-trash"></i>
+    Delete layer
+  </a>
+</div>
+
+<div class="media">
+  <div class="media-left">
+    {% if layer.imageUrl %}
+      <img class="layer-image" src="{{layer.imageUrl}}">
+    {% else %}
+      <img class="layer-image" src="http://placekitten.com/g/128/192">
+    {% endif %}
+  </div>
+  <div class="media-body">
+    <h4 class="layer-title">
+      {{layer.title}}
+      <small>{{layer.publishedDate}}</small>
+    </h4>
+    <p class="layer-description">{{layer.description}}</p>
+    <small class="layer-added-by">Added by {{layer.createdBy|default('Anonymous', True)}}</small>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Layers</h3>
+<a href="/layers/add" class="btn btn-success btn-sm">
+  <i class="glyphicon glyphicon-plus"></i>
+  Add layer
+</a>
+
+{% for layer in layers %}
+<div class="media">
+  <a href="/layers/{{layer.id}}">
+    <div class="media-left">
+      {% if layer.imageUrl %}
+        <img src="{{layer.imageUrl}}">
+      {% else %}
+        <img src="http://placekitten.com/g/128/192">
+      {% endif %}
+    </div>
+    <div class="media-body">
+      <h4>{{layer.title}}</h4>
+      <p>{{layer.author}}</p>
+    </div>
+  </a>
+</div>
+{% else %}
+<p>No layers found</p>
+{% endfor %}
+
+{% if next_page_token %}
+<nav>
+  <ul class="pager">
+    <li><a href="?page_token={{next_page_token}}">More</a></li>
+  </ul>
+</nav>
+{% endif %}
+
+{% endblock %}

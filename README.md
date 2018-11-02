@@ -1,2 +1,2 @@
 # XMG-Cloud
-Cloud interface for Xero Map Generator
+Google Cloud App Engine interface for [Xero Map Generator](https://github.com/derwentx/Xero-Map-Generator)

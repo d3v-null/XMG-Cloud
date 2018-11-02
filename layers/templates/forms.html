@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>{{action}} layer</h3>
+
+<form method="POST" enctype="multipart/form-data">
+
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" name="title" id="title" value="{{layer.title}}" class="form-control"/>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea name="description" id="description" class="form-control">{{layer.description}}</textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="image">Cover Image</label>
+    <input type="file" name="image" id="image" class="form-control"/>
+  </div>
+
+  <div class="form-group hidden">
+    <label for="imageUrl">Cover Image URL</label>
+    <input type="text" name="imageUrl" id="imageUrl" value="{{layer.imageUrl}}" class="form-control"/>
+  </div>
+
+  <div class="form-group hidden">
+    <label for="createdBy">Created by</label>
+    <input type="text" name="createdBy" id="createdBy" value="{{layer.createdBy}}" class="form-control"/>
+  </div>
+
+  <div class="form-group hidden">
+    <label for="createdById">Created by ID</label>
+    <input type="text" name="createdById" id="createdById" value="{{layer.createdById}}" class="form-control"/>
+  </div>
+
+  <button type="submit" class="btn btn-success">Save</button>
+</form>
+
+{% endblock %}
