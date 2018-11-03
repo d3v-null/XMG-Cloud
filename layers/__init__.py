@@ -1,12 +1,15 @@
+"""Models, Views, Controllers for map import layers."""
 import json
 import logging
 
-# import google.cloud.logging
+from flask import current_app, Flask, redirect, request, session, url_for
 import httplib2
-from flask import Flask, current_app, redirect, request, session, url_for
+from oauth2client.contrib.flask_util import UserOAuth2
+
+
+# import google.cloud.logging
 # from google.cloud import error_reporting
 # from google.cloud import logging as google_cloud_logging
-from oauth2client.contrib.flask_util import UserOAuth2
 
 
 oauth2 = UserOAuth2()

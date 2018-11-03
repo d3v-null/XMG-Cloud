@@ -1,8 +1,8 @@
-
+"""CRUD controller for accessing model."""
 from flask import (Blueprint, current_app, redirect, render_template, request,
                    session, url_for)
 
-from layers import oauth2, model
+from layers import model, oauth2
 
 crud = Blueprint('crud', __name__)
 

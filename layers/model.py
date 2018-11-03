@@ -1,3 +1,6 @@
+"""
+Model for accessing layers in datastore.
+"""
 from flask import current_app
 from google.cloud import datastore
 
