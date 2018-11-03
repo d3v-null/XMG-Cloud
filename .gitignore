@@ -102,4 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-config.py
+
+# Files which contain creds
+.*.env
+app.*.yaml
