@@ -16,7 +16,7 @@ before_install:
     - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
     - sudo apt-get update && sudo apt-get install google-cloud-sdk google-cloud-sdk-app-engine-python google-cloud-sdk-datastore-emulator
     - export GCLOUD_SDK_PATH=$(which gcloud | xargs readlink -f | xargs dirname | xargs dirname)
-    - export PYTHONPATH="$GCLOUD_SDK_PATH/platform/google_appengine/:$PYTHONPATH"
+    - export PYTHONPATH="$GCLOUD_SDK_PATH/platform/google_appengine/:$GCLOUD_SDK_PATH/platform/google_appengine/lib/yaml/lib:$PYTHONPATH"
 install:
     - pip install -r requirements.txt
     - pip install -r requirements-dev.txt
