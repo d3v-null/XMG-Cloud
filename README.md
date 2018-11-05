@@ -7,13 +7,25 @@ Largely based off [this tutorial](https://cloud.google.com/python/getting-starte
 
 See: [Setting Up a Python Development Environment](https://cloud.google.com/python/setup)
 
-If you use pyenv, you can use pyenv-virtualenv to create your virtual Python3 environment.
+If you use pyenv, you can use pyenv-virtualenv to create your virtual Python2 environment.
 
 ```bash
-pyenv virtualenv 3 xmg-cloud
+pyenv virtualenv 2 xmg-cloud
 pyenv activate xmg-cloud
 pip install -r requirements.txt -r requirements-dev.txt
 ```
+
+## Google Cloud SDK
+
+Unfortunately google cloud SDK only works with Python2 at the moment, and it is necessary in order to emulate the cloud storage in order to perform local tests.
+
+You will need to install the Google Cloud SDK: https://cloud.google.com/sdk/install
+
+Then you need to install the components `cloud-datastore-emulator` and `app-engine-python` with `gcloud components install`
+
+You will need to make sure that the path to the python extensions is available to python in order to perform local tests. To get the path to your google cloud SDK, use `export GCLOUD_SDK_PATH=$(which gcloud | xargs readlink | xargs dirname | xargs dirname)` (only use `-f` on GNU, not BSD)
+
+You will need to `export PYTHONPATH="$GCLOUD_SDK_PATH/platform/google_appengine/:$GCLOUD_SDK_PATH/platform/google_appengine/lib/yaml/lib:$PYTHONPATH"`
 
 # Configuration
 
@@ -55,7 +67,7 @@ gsutil defacl set public-read gs://[YOUR-BUCKET-NAME]
 set the `CLOUD_STORAGE_BUCKET` environment variable to your staging bucket name in your CI settings and your environment app config file.
 
 ```bash
-echo $'- CLOUD_STORAGE_BUCKET=\'[YOUR-STAGING-BUCKET-NAME]\'' >> app.[ENVIRONMENT].yaml
+echo $'- CLOUD_STORAGE_BUCKET: [YOUR-STAGING-BUCKET-NAME]' >> app.[ENVIRONMENT].yaml
 ```
 
 ## Create a Web Application Client ID
@@ -66,8 +78,8 @@ set the `GOOGLE_OAUTH2_CLIENT_ID` and `GOOGLE_OAUTH2_CLIENT_SECRET` environment
 variables in your CI settings and your environment app config file.
 
 ```bash
-echo $'- GOOGLE_OAUTH2_CLIENT_ID=\'[YOUR-CLIENT-ID]\'' >> app.[ENVIRONMENT].yaml
-echo $'- GOOGLE_OAUTH2_CLIENT_SECRET=\'[YOUR-CLIENT-SECRET]\'' >> app.[ENVIRONMENT].yaml
+echo $'- GOOGLE_OAUTH2_CLIENT_ID: [YOUR-CLIENT-ID]' >> app.[ENVIRONMENT].yaml
+echo $'- GOOGLE_OAUTH2_CLIENT_SECRET: [YOUR-CLIENT-SECRET]' >> app.[ENVIRONMENT].yaml
 ```
 
 # Testing

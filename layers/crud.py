@@ -2,7 +2,7 @@
 from flask import (Blueprint, current_app, redirect, render_template, request,
                    session, url_for)
 
-from layers import model, oauth2
+from layers import model
 
 crud = Blueprint('crud', __name__)
 
