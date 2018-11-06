@@ -22,7 +22,7 @@ before_script:
     - chmod +x ./cc-test-reporter
     - ./cc-test-reporter before-build
 script:
-    - py.test tests -x --log-cli-level DEBUG --verbose -s
+    - py.test tests -x --log-cli-level DEBUG --verbose -s --full-trace
     # - py.test --cov layers tests
 after_script:
     - coverage report -m
