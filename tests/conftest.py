@@ -67,6 +67,8 @@ def model(monkeypatch, app):
     ds_testbed.init_memcache_stub()
     # Clear in-context cache before each test.
     ndb.get_context().clear_cache()
+    # Initialize app identity stub
+    ds_testbed.init_app_identity_stub()
 
     # Ensure no layers exist before running. This typically helps if tests
     # somehow left the database in a bad state.
