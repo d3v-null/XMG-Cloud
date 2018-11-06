@@ -52,7 +52,7 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
     app.register_blueprint(crud, url_prefix='/layers')
 
     # Add a default root route.
-    @oauth2.required
+    # @oauth2.required
     @app.route("/")
     def index():
         # TODO
