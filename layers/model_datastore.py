@@ -8,6 +8,11 @@ builtin_list = list
 
 KIND = 'Layer'
 
+
+def init_app(app):
+    pass
+
+
 def get_client():
     return datastore.Client(current_app.config['PROJECT_ID'])
 

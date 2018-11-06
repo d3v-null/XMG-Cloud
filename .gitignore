@@ -106,3 +106,4 @@ venv.bak/
 # Files which contain creds
 .*.env
 app.*.yaml
+cloud_sql_proxy

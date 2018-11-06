@@ -57,6 +57,15 @@ echo $'- GOOGLE_CLOUD_PROJECT: \'[YOUR-STAGING-PROJECT-ID]\'' >> app.[ENVIRONMEN
 ## Enable the Cloud Datastore, Cloud Pub/Sub, Cloud Storage JSON and Stackdriver Logging APIs.
 [Enable the APIs](https://console.cloud.google.com/flows/enableapi?apiid=datastore.googleapis.com,datastore,pubsub,storage_api,logging,plus,sqladmin.googleapis.com&redirect=https://console.cloud.google.com&_ga=2.204779344.-1904653949.1530240882)
 
+## Create a Cloud SQL instance and database
+
+See [Create a Cloud SQL for MySQL Second Generation instance](https://cloud.google.com/sql/docs/mysql/create-instance)
+
+set the `CLOUDSQL_USER`, `CLOUDSQL_PASSWORD` and `CLOUDSQL_CONNECTION_NAME`
+environment variables in your environment app config file.
+
+For Travis, just use `USER='root', PASSWORD=''` as per https://docs.travis-ci.com/user/database-setup/
+
 ## Create a Cloud Storage bucket
 see [Using Cloud Storage with Python](https://cloud.google.com/python/getting-started/using-cloud-storage)
 ```bash
@@ -72,13 +81,13 @@ echo $'- CLOUD_STORAGE_BUCKET: [YOUR-STAGING-BUCKET-NAME]' >> app.[ENVIRONMENT].
 
 ## Create a service account for Travis to use
 
-see [Continuous Delivery with Travis CI
-](https://cloud.google.com/solutions/continuous-delivery-with-travis-ci)
+see [Continuous Delivery with Travis CI](https://cloud.google.com/solutions/continuous-delivery-with-travis-ci)
 
-encrypt the json and add it to your repo with
+ensuring not to commit any of these files, encrypt the json file and add it to
+your repo with:
 
 ```
-tar -czf credentials.tar.gz client-secret.json
+tar -czf credentials.tar.gz [YOUR_SERVICE_ACCOUNT_CREDS].json
 sudo travis login
 sudo travis encrypt-file credentials.tar.gz --add
 ```
@@ -104,6 +113,14 @@ pip install shyaml
 cat app.staging.yaml | shyaml key-values-0 env_variables | xargs -0 -n2 -J{} sh -c 'echo export $1=$2' -- {} > .staging.env
 source .staging.env
 ```
+
+In your local mysql server, create a database called layers and run
+
+```bash
+python layers/model_cloudsql.py
+```
+
+to initialize the database
 
 Run local unit tests with
 

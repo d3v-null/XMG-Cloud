@@ -3,6 +3,8 @@ python: '2.7'
 cache:
   directories:
   - "$HOME/google-cloud-sdk/"
+services:
+  - mysql
 env:
   global:
   - CLOUDSDK_CORE_DISABLE_PROMPTS: 1
@@ -28,6 +30,7 @@ before_script:
   > ./cc-test-reporter
 - chmod +x ./cc-test-reporter
 - "./cc-test-reporter before-build"
+- python layers/model_cloudsql.py
 script:
 - py.test tests -x --log-cli-level DEBUG --verbose -s --full-trace
 after_script:

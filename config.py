@@ -14,6 +14,44 @@ SECRET_KEY = 'secret'
 # https://console.developers.google.com
 PROJECT_ID = os.environ.get('GOOGLE_CLOUD_PROJECT')
 
+# CloudSQL & SQLAlchemy configuration
+# Replace the following values the respective values of your Cloud SQL
+# instance.
+CLOUDSQL_USER = os.environ.get('CLOUDSQL_USER')
+CLOUDSQL_PASSWORD = os.environ.get('CLOUDSQL_PASSWORD')
+CLOUDSQL_DATABASE = 'layers'
+# Set this value to the Cloud SQL connection name, e.g.
+#   "project:region:cloudsql-instance".
+# You must also update the value in app.yaml.
+CLOUDSQL_CONNECTION_NAME = os.environ.get('CLOUDSQL_CONNECTION_NAME')
+
+# The CloudSQL proxy is used locally to connect to the cloudsql instance.
+# To start the proxy, use:
+#
+#   $ cloud_sql_proxy -instances=your-connection-name=tcp:3306
+#
+# Port 3306 is the standard MySQL port. If you need to use a different port,
+# change the 3306 to a different port number.
+
+# Alternatively, you could use a local MySQL instance for testing.
+LOCAL_SQLALCHEMY_DATABASE_URI = (
+    'mysql+pymysql://{user}:{password}@127.0.0.1:3306/{database}').format(
+        user=CLOUDSQL_USER, password=CLOUDSQL_PASSWORD,
+        database=CLOUDSQL_DATABASE)
+
+# When running on App Engine a unix socket is used to connect to the cloudsql
+# instance.
+LIVE_SQLALCHEMY_DATABASE_URI = (
+    'mysql+pymysql://{user}:{password}@localhost/{database}'
+    '?unix_socket=/cloudsql/{connection_name}').format(
+        user=CLOUDSQL_USER, password=CLOUDSQL_PASSWORD,
+        database=CLOUDSQL_DATABASE, connection_name=CLOUDSQL_CONNECTION_NAME)
+
+if os.environ.get('GAE_INSTANCE'):
+    SQLALCHEMY_DATABASE_URI = LIVE_SQLALCHEMY_DATABASE_URI
+else:
+    SQLALCHEMY_DATABASE_URI = LOCAL_SQLALCHEMY_DATABASE_URI
+
 # Google Cloud Storage and upload settings.
 # Typically, you'll name your bucket the same as your project. To create a
 # bucket:
