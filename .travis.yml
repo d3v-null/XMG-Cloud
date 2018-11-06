@@ -33,7 +33,7 @@ before_script:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS layers;'
 - python layers/model_cloudsql.py
 script:
-- py.test tests -x --log-cli-level DEBUG --verbose -s --full-trace
+- py.test --cov layers tests
 after_script:
 - coverage report -m
 - coverage xml
