@@ -4,7 +4,7 @@ import logging
 
 from flask import current_app, Flask, redirect, request, session, url_for
 import httplib2
-from oauth2client.contrib.flask_util import UserOAuth2
+# from oauth2client.contrib.flask_util import UserOAuth2
 
 
 # import google.cloud.logging
@@ -12,7 +12,7 @@ from oauth2client.contrib.flask_util import UserOAuth2
 # from google.cloud import logging as google_cloud_logging
 
 
-oauth2 = UserOAuth2()
+# oauth2 = UserOAuth2()
 
 def create_app(config, debug=False, testing=False, config_overrides=None):
     app = Flask(__name__)
@@ -33,10 +33,10 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
         # client.setup_logging(logging.INFO)
 
     # Initalize the OAuth2 helper.
-    oauth2.init_app(
-        app,
-        scopes=['email', 'profile'],
-        authorize_callback=_request_user_info)
+    # oauth2.init_app(
+    #     app,
+    #     scopes=['email', 'profile'],
+    #     authorize_callback=_request_user_info)
 
     # Add a logout handler.
     @app.route('/logout')
@@ -44,7 +44,7 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
         # Delete the user's profile and the credentials stored by oauth2.
         del session['profile']
         session.modified = True
-        oauth2.storage.delete()
+        # oauth2.storage.delete()
         return redirect(request.referrer or '/')
 
     # Register the Layers CRUD blueprint.
