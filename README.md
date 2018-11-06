@@ -70,6 +70,19 @@ set the `CLOUD_STORAGE_BUCKET` environment variable to your staging bucket name 
 echo $'- CLOUD_STORAGE_BUCKET: [YOUR-STAGING-BUCKET-NAME]' >> app.[ENVIRONMENT].yaml
 ```
 
+## Create a service account for Travis to use
+
+see [Continuous Delivery with Travis CI
+](https://cloud.google.com/solutions/continuous-delivery-with-travis-ci)
+
+encrypt the json and add it to your repo with
+
+```
+tar -czf credentials.tar.gz client-secret.json
+sudo travis login
+sudo travis encrypt-file credentials.tar.gz --add
+```
+
 ## Create a Web Application Client ID
 
 See [Authenticating Users with Python](https://cloud.google.com/python/getting-started/authenticate-users)

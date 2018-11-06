@@ -1,31 +1,37 @@
 language: python
-python: "2.7"
+python: '2.7'
 cache:
   directories:
-    - "$HOME/google-cloud-sdk/"
+  - "$HOME/google-cloud-sdk/"
 env:
   global:
-    - CLOUDSDK_CORE_DISABLE_PROMPTS: 1
-
+  - CLOUDSDK_CORE_DISABLE_PROMPTS: 1
 before_install:
-    - export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
-    - echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-    - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-    - sudo apt-get update && sudo apt-get install google-cloud-sdk google-cloud-sdk-app-engine-python google-cloud-sdk-datastore-emulator
-    - export GCLOUD_SDK_PATH=$(which gcloud | xargs readlink -f | xargs dirname | xargs dirname)
-    - export PYTHONPATH="$GCLOUD_SDK_PATH/platform/google_appengine/:$GCLOUD_SDK_PATH/platform/google_appengine/lib/yaml/lib:$PYTHONPATH"
+- openssl aes-256-cbc -K $encrypted_b1c78a9409ce_key -iv $encrypted_b1c78a9409ce_iv
+  -in credentials.tar.gz.enc -out credentials.tar.gz -d
+- tar -xzf credentials.tar.gz
+- export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+- echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee
+  -a /etc/apt/sources.list.d/google-cloud-sdk.list
+- curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+- sudo apt-get update && sudo apt-get install google-cloud-sdk google-cloud-sdk-app-engine-python
+  google-cloud-sdk-datastore-emulator
+- gcloud auth activate-service-account --key-file acd-xmg-27268-a4c25a448f1b.json
+- export GCLOUD_SDK_PATH=$(which gcloud | xargs readlink -f | xargs dirname | xargs
+  dirname)
+- export PYTHONPATH="$GCLOUD_SDK_PATH/platform/google_appengine/:$GCLOUD_SDK_PATH/platform/google_appengine/lib/yaml/lib:$PYTHONPATH"
 install:
-    - pip install -r requirements.txt
-    - pip install -r requirements-dev.txt
+- pip install -r requirements.txt
+- pip install -r requirements-dev.txt
 before_script:
-    - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-    - chmod +x ./cc-test-reporter
-    - ./cc-test-reporter before-build
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+  > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
 script:
-    - py.test tests -x --log-cli-level DEBUG --verbose -s --full-trace
-    # - py.test --cov layers tests
+- py.test tests -x --log-cli-level DEBUG --verbose -s --full-trace
 after_script:
-    - coverage report -m
-    - coverage xml
-    - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --debug
-    - codecov
+- coverage report -m
+- coverage xml
+- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --debug"
+- codecov
