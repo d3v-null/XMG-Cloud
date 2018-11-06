@@ -30,6 +30,7 @@ before_script:
   > ./cc-test-reporter
 - chmod +x ./cc-test-reporter
 - "./cc-test-reporter before-build"
+- mysql -e 'CREATE DATABASE layers;'
 - python layers/model_cloudsql.py
 script:
 - py.test tests -x --log-cli-level DEBUG --verbose -s --full-trace
