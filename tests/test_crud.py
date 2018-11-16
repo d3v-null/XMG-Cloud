@@ -44,18 +44,31 @@ class TestCrudActions(object):
         assert 'Test Layer' in body
 
     def test_edit(self, app, model):
-        existing = model.create({'title': "Temp Title"})
+        existing = model.create({
+            'title': "Temp Title",
+            'stateFilter': 'oldState1|oldState2',
+            'groupFilter': 'oldGroup1|oldGroup2'
+        })
 
         with app.test_client() as atc:
             resp = atc.post(
                 '/layers/%s/edit' % existing['id'],
-                data={'title': 'Updated Title'},
+                data={
+                    'title': 'Updated Title',
+                    'stateFilter': 'newState1|newState2',
+                    'groupFilter': 'newGroup1|newGroup2'
+                },
                 follow_redirects=True)
 
         assert resp.status == '200 OK'
         body = resp.data.decode('utf-8')
         assert 'Updated Title' in body
         assert 'Temp Title' not in body
+        assert 'newState1|newState2' in body
+        assert 'oldState1|oldState2' not in body
+        assert 'newGroup1|newGroup2' in body
+        assert 'oldGroup1|oldGroup2' not in body
+
 
     def test_delete(self, app, model):
         existing = model.create({'title': "Temp Title"})

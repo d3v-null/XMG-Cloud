@@ -55,7 +55,6 @@ def model(monkeypatch, app):
     delete_all_layers(layers.model)
 
 
-
 # The backend data stores can sometimes be flaky. It's useful to retry this
 # a few times before giving up.
 # @retry(

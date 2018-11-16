@@ -30,8 +30,10 @@ class Layer(db.Model):
     # author = db.Column(db.String(255))
     # publishedDate = db.Column(db.String(255))
     # imageUrl = db.Column(db.String(255))
-    # description = db.Column(db.String(4096))
+    description = db.Column(db.String(4096))
     createdBy = db.Column(db.String(255))
+    groupFilter = db.Column(db.String(255))
+    stateFilter = db.Column(db.String(255))
     createdById = db.Column(db.String(255))
 
     def __repr__(self):
